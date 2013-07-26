@@ -225,6 +225,12 @@
     <Compile Include="Common\XmlSchema\SubscriptionsData.cs">
       <DependentUpon>SubscriptionsData.xsd</DependentUpon>
     </Compile>
+    <Compile Include="MediaService\IWebsitesClient.cs" />
+    <Compile Include="MediaService\MediaServiceBaseCmdLet.cs" />
+    <Compile Include="MediaService\MediaServicesClient.cs" />
+    <Compile Include="MediaService\Services\IMediaServiceManagement.cs" />
+    <Compile Include="MediaService\Services\MediaServicesEntities\IMediaServiceAccount.cs" />
+    <Compile Include="MediaService\Services\MediaServicesExtensionsMethods.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
