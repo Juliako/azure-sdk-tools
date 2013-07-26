@@ -191,6 +191,7 @@
     <Compile Include="Environment\RemoveAzureEnvironment.cs" />
     <Compile Include="Environment\SetAzureEnvironment.cs" />
     <Compile Include="Environment\GetAzureEnvironment.cs" />
+    <Compile Include="MediaService\GetAzureMediaServicesCommand.cs" />
     <Compile Include="ServiceBus\GetAzureSBLocation.cs" />
     <Compile Include="ServiceBus\GetAzureSBNamespace.cs" />
     <Compile Include="ServiceBus\NewAzureSBNamespace.cs" />
