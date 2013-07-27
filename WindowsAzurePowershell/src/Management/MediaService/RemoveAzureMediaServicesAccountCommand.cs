@@ -67,7 +67,6 @@ namespace Microsoft.WindowsAzure.Management.MediaService
 
                     Channel.DeleteMediaServicesAccount(s, this.Name);
                 });
-                WaitForOperation(CommandRuntime.ToString());
             });
 
             WriteObject(true);
