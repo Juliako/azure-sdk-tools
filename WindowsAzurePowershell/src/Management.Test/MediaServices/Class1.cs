@@ -60,6 +60,32 @@ namespace Microsoft.WindowsAzure.Management.Test.MediaServices
             Assert.IsNotNull(sites);
            
         }
-         
+
+        [TestMethod]
+        public void ProcessRemoveMediaServicesAccountTest()
+        {
+            // Setup
+            SimpleMediaServiceManagement channel = new SimpleMediaServiceManagement();
+
+            channel.GetMediaServicesThunk = ar =>
+            {
+                return new MediaServiceAccounts(new List<MediaServiceAccount> { new MediaServiceAccount { Name = "website2" } });
+            };
+
+            // Test
+            var getAzureWebsiteCommand = new RemoveAzureMediaServicesAccountCommand(channel)
+            {
+                ShareChannel = true,
+                CommandRuntime = new MockCommandRuntime(),
+                CurrentSubscription = new SubscriptionData { SubscriptionId = base.subscriptionId },
+                Name = "website2",
+            };
+
+            getAzureWebsiteCommand.ExecuteCmdlet();
+            Assert.AreEqual(1, ((MockCommandRuntime)getAzureWebsiteCommand.CommandRuntime).OutputPipeline.Count);
+            var deleted = (bool)((MockCommandRuntime)getAzureWebsiteCommand.CommandRuntime).OutputPipeline.FirstOrDefault();
+            Assert.IsTrue(deleted);
+
+        }
     }
 }

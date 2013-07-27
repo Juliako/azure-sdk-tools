@@ -1292,4 +1292,7 @@ Please follow these steps in the portal:
   <data name="CacheMismatchMessage" xml:space="preserve">
     <value>Please upgrade the cache runtime of role '{0}' to '{1}' using Set-AzureServiceProjectRole -RoleName {0} -Runtime Cache -Version {1}</value>
   </data>
+  <data name="InvalidMediaServicesAccount" xml:space="preserve">
+    <value>The account {0} was not found. Please specify a valid account name.</value>
+  </data>
 </root>

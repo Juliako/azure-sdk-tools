@@ -50,5 +50,28 @@ namespace Microsoft.WindowsAzure.Management.Test.Utilities.MediaServices
 
             return default(MediaServiceAccounts);
         }
+
+        public IAsyncResult BeginDeleteMediaServicesAccount(string subscriptionName, string accountName, AsyncCallback callback, object state)
+        {
+            SimpleServiceManagementAsyncResult result = new SimpleServiceManagementAsyncResult();
+            result.Values["subscriptionName"] = subscriptionName;
+            result.Values["accountName"] = accountName;
+            result.Values["callback"] = callback;
+            result.Values["state"] = state;
+            return result;
+        }
+
+        public void EndDeleteMediaServicesAccount(IAsyncResult asyncResult)
+        {
+            if (GetMediaServicesThunk != null)
+            {
+                SimpleServiceManagementAsyncResult result = asyncResult as SimpleServiceManagementAsyncResult;
+                Assert.IsNotNull(result, "asyncResult was not SimpleServiceManagementAsyncResult!");
+            }
+            else if (ThrowsIfNotImplemented)
+            {
+                throw new NotImplementedException("GetSitesThunk is not implemented!");
+            }
+        }
     }
 }

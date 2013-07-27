@@ -51,10 +51,16 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services
         [WebInvoke(Method = "GET", UriTemplate = UriElements.MediaServiceRoot)]
         IAsyncResult BeginGetMediaServices(string subscriptionName, AsyncCallback callback, object state);
         MediaServiceAccounts EndGetMediaServices(IAsyncResult asyncResult);
-        #endregion
 
-        
-
-        
+        [Description("Deletes the account for a given subscription.")]
+        [OperationContract(AsyncPattern = true)]
+        [WebInvoke(Method = "DELETE", UriTemplate = UriElements.MediaServiceRoot + "/{accountName}")]
+        IAsyncResult BeginDeleteMediaServicesAccount(
+            string subscriptionName,
+            string accountName,
+            AsyncCallback callback,
+            object state);
+        void EndDeleteMediaServicesAccount(IAsyncResult asyncResult);
+        #endregion        
     }
 }
