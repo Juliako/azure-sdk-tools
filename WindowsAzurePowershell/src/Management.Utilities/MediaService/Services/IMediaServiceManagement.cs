@@ -19,7 +19,6 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Xml.Serialization;
 using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.MediaServicesEntities;
-using Microsoft.WindowsAzure.Management.Utilities.Websites;
 
 namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services
 {
@@ -41,16 +40,24 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services
     /// </summary>
     [ServiceContract(Namespace = UriElements.ServiceNamespace)]
     [ServiceKnownType(typeof(MediaServiceAccount))]
-    public interface IMediaServiceManagement
+    [ServiceKnownType(typeof(MediaServiceAccountDetails))]
+    [ServiceKnownType(typeof(AccountKeys))]
+    public interface IMediaServiceManagementAzureNamespace
     {
 
         #region Site CRUD
-
-        [Description("Returns all the sites for a given subscription and webspace.")]
+        [Description("Returns all the mediaservices for a given subscription.")]
         [OperationContract(AsyncPattern = true)]
         [WebInvoke(Method = "GET", UriTemplate = UriElements.MediaServiceRoot)]
         IAsyncResult BeginGetMediaServices(string subscriptionName, AsyncCallback callback, object state);
         MediaServiceAccounts EndGetMediaServices(IAsyncResult asyncResult);
+
+
+        [Description("Returns a mediaservices by a name for a given subscription.")]
+        [OperationContract(AsyncPattern = true)]
+        [WebInvoke(Method = "GET", UriTemplate = UriElements.MediaServiceAccountDetails)]
+        IAsyncResult BeginGetMediaService(string subscriptionName, string name, AsyncCallback callback, object state);
+        MediaServiceAccountDetails EndGetMediaService(IAsyncResult asyncResult);
 
         [Description("Deletes the account for a given subscription.")]
         [OperationContract(AsyncPattern = true)]

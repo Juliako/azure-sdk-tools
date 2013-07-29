@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
-using Microsoft.WindowsAzure.Management.Utilities.Websites;
 using Microsoft.WindowsAzure.Management.Utilities.Websites.Services.WebEntities;
+using Newtonsoft.Json;
 
 namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.MediaServicesEntities
 {
@@ -14,11 +13,12 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.Medi
         Uri ParentLink { get; set; }
         Uri SelfLink { get; set; }
         string State { get; set; }
-         string Type { get; set; }
+        string Type { get; set; }
 
     }
 
     [DataContract(Namespace = UriElements.ServiceNamespace, Name = "ServiceResource")]
+    [Newtonsoft.Json.JsonObject(Title = "ServiceResource")]
     public class MediaServiceAccount : IMediaServiceAccount
     {
         [DataMember(EmitDefaultValue = false, Order = 5)]
@@ -38,6 +38,40 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.Medi
 
         [DataMember(EmitDefaultValue = false, Order = 1)]
         public string Type { get; set; }
+    }
+    [Newtonsoft.Json.JsonObject(Title = "AccountDetails")]
+    [DataContract(Namespace = UriElements.AccountDetailsNamespace, Name = "AccountDetails")]
+    public class MediaServiceAccountDetails
+    {
+        
+        [DataMember]
+        internal string AccountKey { get; set; }
+
+        [DataMember]
+        internal AccountKeys AccountKeys { get; set; }
+
+        [DataMember]
+        public string AccountName { get; set; }
+
+        [DataMember]
+        public string AccountRegion { get; set; }
+
+        [DataMember]
+        public string StorageAccountName { get; set; }
+
+        public string PrimaryAccountKey { get { return AccountKeys.Primary; } }
+
+        public string SecondaryAccountKey { get { return AccountKeys.Secondary; } }
+    }
+
+    [DataContract(Namespace = UriElements.AccountDetailsNamespace)]
+    public class AccountKeys
+    {
+        [DataMember]
+        public string Primary { get; set; }
+
+        [DataMember]
+        public string Secondary { get; set; }
     }
 
      /// <summary>

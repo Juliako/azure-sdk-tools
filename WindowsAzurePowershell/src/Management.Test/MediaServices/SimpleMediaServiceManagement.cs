@@ -6,7 +6,7 @@ using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.MediaSer
 
 namespace Microsoft.WindowsAzure.Management.Test.Utilities.MediaServices
 {
-    public class SimpleMediaServiceManagement : IMediaServiceManagement
+    public class SimpleMediaServiceManagementAzureNamespace : IMediaServiceManagementAzureNamespace
     {
         /// <summary>
         /// Gets or sets a value indicating whether the thunk wrappers will
@@ -16,9 +16,9 @@ namespace Microsoft.WindowsAzure.Management.Test.Utilities.MediaServices
         public bool ThrowsIfNotImplemented { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SimpleMediaServiceManagement"/> class.
+        /// Initializes a new instance of the <see cref="SimpleMediaServiceManagementAzureNamespace"/> class.
         /// </summary>
-        public SimpleMediaServiceManagement()
+        public SimpleMediaServiceManagementAzureNamespace()
         {
             ThrowsIfNotImplemented = true;
         }
@@ -51,6 +51,16 @@ namespace Microsoft.WindowsAzure.Management.Test.Utilities.MediaServices
             return default(MediaServiceAccounts);
         }
 
+        public IAsyncResult BeginGetMediaService(string subscriptionName, string name, AsyncCallback callback, object state)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MediaServiceAccountDetails EndGetMediaService(IAsyncResult asyncResult)
+        {
+            throw new NotImplementedException();
+        }
+
         public IAsyncResult BeginDeleteMediaServicesAccount(string subscriptionName, string accountName, AsyncCallback callback, object state)
         {
             SimpleServiceManagementAsyncResult result = new SimpleServiceManagementAsyncResult();
@@ -73,5 +83,20 @@ namespace Microsoft.WindowsAzure.Management.Test.Utilities.MediaServices
                 throw new NotImplementedException("GetSitesThunk is not implemented!");
             }
         }
+
+        #region IMediaServiceManagementAzureNamespace Members
+
+
+        public IAsyncResult BeginRegenerateMediaServicesAccount(string subscriptionName, string accountName, string keyType, AsyncCallback callback, object state)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EndRegenerateMediaServicesAccount(IAsyncResult asyncResult)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

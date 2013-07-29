@@ -74,7 +74,6 @@ namespace Microsoft.WindowsAzure.Management.Utilities.Websites
         public const string StampsRoot = "locations/{locationName}/stamps";
         public const string StampsCommand = "?Command={command}";
         public const string WebSitesRoot = "{subscriptionName}/services/webspaces/{webspaceName}/sites";
-        public const string MediaServiceRoot = "{subscriptionName}/services/mediaservices/Accounts";
         public const string SqlDatabasesRoot = "{subscriptionName}/services/webspaces/{webspaceName}/sqldbs";
         public const string MySqlDatabaseRoot = "{subscriptionName}/services/webspaces/{webspaceName}/mysqldbs";
         public const string SqlAzureDatabasesRoot = "{subscriptionName}/services/webspaces/{webspaceName}/sqlazuredbs";

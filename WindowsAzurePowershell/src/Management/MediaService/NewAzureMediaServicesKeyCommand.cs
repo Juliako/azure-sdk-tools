@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.MediaService
         /// <param name="channel">
         /// Channel used for communication with Azure's service management APIs.
         /// </param>
-        public NewAzureMediaServicesKeyCommand(IMediaServiceManagement channel)
+        public NewAzureMediaServicesKeyCommand(IMediaServiceManagementAzureNamespace channel)
         {
             Channel = channel;
         }

@@ -9,11 +9,6 @@ using Microsoft.WindowsAzure.Management.Utilities.Properties;
 
 namespace Microsoft.WindowsAzure.Management.MediaService
 {
-
-
-
-
-
     /// <summary>
     /// Gets an azure website.
     /// </summary>
@@ -28,7 +23,7 @@ namespace Microsoft.WindowsAzure.Management.MediaService
             set;
         }
 
-        [Parameter(Position = 2, HelpMessage = "Do not confirm deletion of account")]
+        [Parameter(Position = 1, HelpMessage = "Do not confirm deletion of account.")]
         public SwitchParameter Force { get; set; }
 
         /// <summary>
@@ -45,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.MediaService
         /// <param name="channel">
         /// Channel used for communication with Azure's service management APIs.
         /// </param>
-        public RemoveAzureMediaServicesAccountCommand(IMediaServiceManagement channel)
+        public RemoveAzureMediaServicesAccountCommand(IMediaServiceManagementAzureNamespace channel)
         {
             Channel = channel;
         }
