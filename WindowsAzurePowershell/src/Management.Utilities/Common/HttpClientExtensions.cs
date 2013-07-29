@@ -147,5 +147,30 @@ namespace Microsoft.WindowsAzure.Management.Utilities.Common
 
 			return response;
 		}
+
+        public static HttpResponseMessage PostAsJsonAsyncWithoutEnsureSuccessCode(
+            this HttpClient client,
+            string requestUri,
+            JObject json,
+            Action<string> Logger)
+        {
+            AddUserAgent(client);
+
+            LogRequest(
+                HttpMethod.Post.Method,
+                client.BaseAddress + requestUri,
+                client.DefaultRequestHeaders,
+                JsonConvert.SerializeObject(json, Formatting.Indented),
+                Logger);
+            HttpResponseMessage response = client.PostAsJsonAsync(requestUri, json).Result;
+            string content = response.Content.ReadAsStringAsync().Result;
+            LogResponse(
+                response.StatusCode.ToString(),
+                response.Headers,
+                General.TryFormatJson(content),
+                Logger);
+
+            return response;
+        }
 	}
 }

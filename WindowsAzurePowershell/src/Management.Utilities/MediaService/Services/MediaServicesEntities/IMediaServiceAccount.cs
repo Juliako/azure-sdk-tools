@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Runtime.Serialization;
 using Microsoft.WindowsAzure.Management.Utilities.Websites.Services.WebEntities;
 using Newtonsoft.Json;
@@ -73,6 +74,37 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.Medi
         [DataMember]
         public string Secondary { get; set; }
     }
+
+    [DataContract]
+    [Newtonsoft.Json.JsonObject(Title = "AccountCreationResult")]
+    public sealed class AccountCreationResult
+    {
+        public Guid AccountId { get; internal set; }
+        public string AccountName { get; internal set; }
+        public string Subscription { get; internal set; }
+    }
+
+    [DataContract]
+    [Newtonsoft.Json.JsonObject(Title = "AccountCreationRequest")]
+    public class AccountCreationRequest
+    {
+        
+
+        [DataMember]
+        public string AccountName { get; set; }
+
+        [DataMember]
+        public string BlobStorageEndpointUri { get; set; }
+
+        [DataMember]
+        public string Region { get; set; }
+
+        [DataMember]
+        public string StorageAccountKey { get; set; }
+
+        [DataMember]
+        public string StorageAccountName { get; set; }
+    } 
 
      /// <summary>
     /// Collection of sites

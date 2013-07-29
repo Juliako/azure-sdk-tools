@@ -21,5 +21,6 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService
         List<MediaServiceAccount> GetMediaServiceAccounts();
 
         MediaServiceAccountDetails GetMediaService(string name);
+        AccountCreationResult NewAzureMediaService(AccountCreationRequest request);
     }
 }

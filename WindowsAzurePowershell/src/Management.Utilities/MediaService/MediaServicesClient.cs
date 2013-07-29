@@ -8,6 +8,8 @@ using Microsoft.WindowsAzure.Management.Utilities.Common;
 using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services;
 using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.MediaServicesEntities;
 using Microsoft.WindowsAzure.ServiceManagement;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Utilities.MediaService
 {
@@ -33,6 +35,18 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService
                 details = client.GetJson<MediaServiceAccountDetails>(String.Format("{0}/{1}", UriElements.Accounts, name), Logger);
             }
             return details;
+        }
+
+        public AccountCreationResult NewAzureMediaService(AccountCreationRequest request)
+        {
+            AccountCreationResult result = null;
+            using (HttpClient client = CreateIMediaServicesHttpClient())
+            {
+                HttpResponseMessage message = client.PostAsJsonAsyncWithoutEnsureSuccessCode(UriElements.Accounts, JObject.FromObject(request), Logger);
+                string content =message.Content.ReadAsStringAsync().Result;
+                result = JsonConvert.DeserializeObject(content, typeof(AccountCreationResult)) as AccountCreationResult;
+            }
+            return result;
         }
 
 
