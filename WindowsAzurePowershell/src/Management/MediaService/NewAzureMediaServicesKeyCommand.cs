@@ -6,6 +6,7 @@ using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.MediaSer
 using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services;
 using System;
 using Microsoft.WindowsAzure.Management.Utilities.Properties;
+using System.Net;
 
 namespace Microsoft.WindowsAzure.Management.MediaService
 {
@@ -70,15 +71,26 @@ namespace Microsoft.WindowsAzure.Management.MediaService
                     {
                         RetryCall(s =>
                         {
-                            var service = Channel.GetMediaServices(s).Find(acc => acc.Name == this.Name);
-                            if (service == null)
+                            try
                             {
-                                throw new Exception(string.Format(Resources.InvalidMediaServicesAccount, Name));
+                                Channel.RegenerateMediaServicesAccount(s, this.Name, KeyType.ToString());
+                            }
+                            catch (Exception x)
+                            {
+                                var webx = x.InnerException as WebException;
+                                if (webx != null && ((HttpWebResponse)webx.Response).StatusCode == HttpStatusCode.NotFound)
+                                {
+                                    throw new Exception(string.Format(Resources.InvalidMediaServicesAccount, Name));
+                                }
+                                else
+                                {
+                                    throw;
+                                }
                             }
 
-                            Channel.RegenerateMediaServicesAccount(s, this.Name, KeyType.ToString());
-
-                            WriteObject("newkey");
+                            var details = Channel.GetMediaService(s, this.Name);
+                            var result = KeyType == KeyType.Primary ? details.AccountKeys.Primary : details.AccountKeys.Secondary;
+                            WriteObject(result);
                         });
                     });
                 });

@@ -2614,6 +2614,24 @@ namespace Microsoft.WindowsAzure.Management.Utilities.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove the account?.
+        /// </summary>
+        internal static string RemoveMediaAccountWarning {
+            get {
+                return ResourceManager.GetString("RemoveMediaAccountWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account removed..
+        /// </summary>
+        internal static string RemoveMediaAccountWhatIfMessage {
+            get {
+                return ResourceManager.GetString("RemoveMediaAccountWhatIfMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Internal Server Error. This could happen because the namespace does not exist or it does not exist under your subscription..
         /// </summary>
         internal static string RemoveNamespaceErrorMessage {

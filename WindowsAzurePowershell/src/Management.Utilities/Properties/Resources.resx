@@ -1301,4 +1301,10 @@ Please follow these steps in the portal:
   <data name="RegenerateKeyWhatIfMessage" xml:space="preserve">
     <value>Generate new key.</value>
   </data>
+  <data name="RemoveMediaAccountWarning" xml:space="preserve">
+    <value>Are you sure you want to remove the account?</value>
+  </data>
+  <data name="RemoveMediaAccountWhatIfMessage" xml:space="preserve">
+    <value>Account removed.</value>
+  </data>
 </root>
