@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService
         using Properties;
         using ServiceManagement;
 
-        public abstract class MediaServiceBaseCmdlet : CloudBaseCmdlet<IMediaServiceManagement>
+        public abstract class MediaServiceBaseCmdlet : CloudBaseCmdlet<IMediaServiceManagementAzureNamespace>
         {
             protected override Operation WaitForOperation(string opdesc)
             {

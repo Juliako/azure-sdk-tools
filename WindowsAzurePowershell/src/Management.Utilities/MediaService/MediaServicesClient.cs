@@ -1,17 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using Microsoft.WindowsAzure.Management.Utilities.CloudService;
 using Microsoft.WindowsAzure.Management.Utilities.Common;
 using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services;
+using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.MediaServicesEntities;
 using Microsoft.WindowsAzure.ServiceManagement;
 
 namespace Microsoft.WindowsAzure.Management.Utilities.MediaService
 {
     public class MediaServicesClient: IMediaServicesClient
     {
-        public List<string> GetMediaServiceAccounts()
+        public List<MediaServiceAccount> GetMediaServiceAccounts()
         {
-            throw new System.NotImplementedException();
+            List<MediaServiceAccount> mediaServiceAccounts = new List<MediaServiceAccount>();
+
+            using (HttpClient client = CreateIMediaServicesHttpClient())
+            {
+               mediaServiceAccounts = client.GetJson<List<MediaServiceAccount>>(UriElements.Accounts, Logger);
+            }
+
+            return mediaServiceAccounts;
+        }
+
+        public MediaServiceAccountDetails GetMediaService(string name)
+        {
+            MediaServiceAccountDetails details =null;
+            using (HttpClient client = CreateIMediaServicesHttpClient())
+            {
+                details = client.GetJson<MediaServiceAccountDetails>(String.Format("{0}/{1}", UriElements.Accounts, name), Logger);
+            }
+            return details;
         }
 
 
@@ -19,9 +40,9 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService
 
         private CloudServiceClient cloudServiceClient;
 
-        public const string WebsitesServiceVersion = "2012-12-01";
+        public const string MediaServiceVersion = "2013-03-01";
 
-        public IMediaServiceManagement MediaServiceChannel { get; internal set; }
+        public IMediaServiceManagementAzureNamespace MediaServiceChannel { get; internal set; }
 
         public IServiceManagement ServiceManagementChannel { get; internal set; }
 
@@ -41,10 +62,10 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService
             Subscription = subscription;
             Logger = logger;
             HeadersInspector = new HeadersInspector();
-            HeadersInspector.RequestHeaders.Add(ServiceManagement.Constants.VersionHeaderName, WebsitesServiceVersion);
+            HeadersInspector.RequestHeaders.Add(Constants.VersionHeaderName, MediaServiceVersion);
             HeadersInspector.RequestHeaders.Add(ApiConstants.UserAgentHeaderName, ApiConstants.UserAgentHeaderValue);
             HeadersInspector.RemoveHeaders.Add(ApiConstants.VSDebuggerCausalityDataHeaderName);
-            MediaServiceChannel = ChannelHelper.CreateChannel<IMediaServiceManagement>(
+            MediaServiceChannel = ChannelHelper.CreateChannel<IMediaServiceManagementAzureNamespace>(
                 ConfigurationConstants.WebHttpBinding(),
                 new Uri(subscription.ServiceEndpoint),
                 subscription.Certificate,
@@ -58,6 +79,22 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService
                 new HttpRestMessageInspector(logger));
 
             cloudServiceClient = new CloudServiceClient(subscription, debugStream: logger);
+        }
+
+        private HttpClient CreateIMediaServicesHttpClient()
+        {
+            WebRequestHandler requestHandler = new WebRequestHandler();
+            requestHandler.ClientCertificates.Add(Subscription.Certificate);
+            StringBuilder endpoint = new StringBuilder(General.EnsureTrailingSlash(Subscription.ServiceEndpoint));
+            endpoint.Append(subscriptionId);
+            endpoint.Append("/services/mediaservices/");
+            HttpClient client = HttpClientHelper.CreateClient(endpoint.ToString(), handler: requestHandler);
+            client.DefaultRequestHeaders.Add(ServiceManagement.Constants.VersionHeaderName, MediaServiceVersion);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+           
+            return client;
         }
     }
 }
