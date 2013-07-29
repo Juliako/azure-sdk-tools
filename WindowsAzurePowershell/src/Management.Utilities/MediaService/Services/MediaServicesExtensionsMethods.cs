@@ -16,5 +16,11 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services
             proxy.EndDeleteMediaServicesAccount(
                 proxy.BeginDeleteMediaServicesAccount(subscriptionName, accountName, null, null));
         }
+
+        public static void RegenerateMediaServicesAccount(this IMediaServiceManagement proxy, string subscriptionName, string accountName, string keyType)
+        {
+            proxy.EndRegenerateMediaServicesAccount(
+                proxy.BeginRegenerateMediaServicesAccount(subscriptionName, accountName, keyType, null, null));
+        }
     }
 }

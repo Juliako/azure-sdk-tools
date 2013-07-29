@@ -1295,4 +1295,10 @@ Please follow these steps in the portal:
   <data name="InvalidMediaServicesAccount" xml:space="preserve">
     <value>The account {0} was not found. Please specify a valid account name.</value>
   </data>
+  <data name="RegenerateKeyWarning" xml:space="preserve">
+    <value>Are you sure you want to regenerate key?</value>
+  </data>
+  <data name="RegenerateKeyWhatIfMessage" xml:space="preserve">
+    <value>Generate new key.</value>
+  </data>
 </root>

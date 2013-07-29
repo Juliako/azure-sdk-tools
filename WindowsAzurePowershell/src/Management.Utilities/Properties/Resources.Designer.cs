@@ -2542,6 +2542,24 @@ namespace Microsoft.WindowsAzure.Management.Utilities.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to regenerate key?.
+        /// </summary>
+        internal static string RegenerateKeyWarning {
+            get {
+                return ResourceManager.GetString("RegenerateKeyWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate new key..
+        /// </summary>
+        internal static string RegenerateKeyWhatIfMessage {
+            get {
+                return ResourceManager.GetString("RegenerateKeyWhatIfMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove Add-On Confirmation.
         /// </summary>
         internal static string RemoveAddOnConformation {

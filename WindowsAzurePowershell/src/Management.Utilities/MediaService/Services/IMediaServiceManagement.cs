@@ -60,7 +60,20 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services
             string accountName,
             AsyncCallback callback,
             object state);
+
         void EndDeleteMediaServicesAccount(IAsyncResult asyncResult);
+
+        [Description("Regenerates an account for a given subscription.")]
+        [OperationContract(AsyncPattern = true)]
+        [WebInvoke(Method = "POST", UriTemplate = UriElements.MediaServiceRoot + "/{accountName}/AccountKeys/{keyType}/Regenerate")]
+        IAsyncResult BeginRegenerateMediaServicesAccount(
+            string subscriptionName,
+            string accountName,
+            string keyType,
+            AsyncCallback callback,
+            object state);
+        void EndRegenerateMediaServicesAccount(IAsyncResult asyncResult);
+        
         #endregion        
     }
 }
