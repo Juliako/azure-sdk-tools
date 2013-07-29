@@ -6,7 +6,7 @@ using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.MediaSer
 
 namespace Microsoft.WindowsAzure.Management.Test.Utilities.MediaServices
 {
-    public class SimpleMediaServiceManagementAzureNamespace : IMediaServiceManagementAzureNamespace,IMediaServiceManagementResourceProviderNamespace
+    public class SimpleMediaServiceManagementAzureNamespace : IMediaServiceManagementAzureNamespace
     {
         /// <summary>
         /// Gets or sets a value indicating whether the thunk wrappers will
@@ -60,5 +60,43 @@ namespace Microsoft.WindowsAzure.Management.Test.Utilities.MediaServices
         {
             throw new NotImplementedException();
         }
+
+        public IAsyncResult BeginDeleteMediaServicesAccount(string subscriptionName, string accountName, AsyncCallback callback, object state)
+        {
+            SimpleServiceManagementAsyncResult result = new SimpleServiceManagementAsyncResult();
+            result.Values["subscriptionName"] = subscriptionName;
+            result.Values["accountName"] = accountName;
+            result.Values["callback"] = callback;
+            result.Values["state"] = state;
+            return result;
+        }
+
+        public void EndDeleteMediaServicesAccount(IAsyncResult asyncResult)
+        {
+            if (GetMediaServicesThunk != null)
+            {
+                SimpleServiceManagementAsyncResult result = asyncResult as SimpleServiceManagementAsyncResult;
+                Assert.IsNotNull(result, "asyncResult was not SimpleServiceManagementAsyncResult!");
+            }
+            else if (ThrowsIfNotImplemented)
+            {
+                throw new NotImplementedException("GetSitesThunk is not implemented!");
+            }
+        }
+
+        #region IMediaServiceManagementAzureNamespace Members
+
+
+        public IAsyncResult BeginRegenerateMediaServicesAccount(string subscriptionName, string accountName, string keyType, AsyncCallback callback, object state)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EndRegenerateMediaServicesAccount(IAsyncResult asyncResult)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

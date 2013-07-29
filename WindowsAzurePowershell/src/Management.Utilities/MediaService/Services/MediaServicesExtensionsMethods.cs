@@ -15,9 +15,17 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services
         {
             return proxy.EndGetMediaService(proxy.BeginGetMediaService(subscriptionName,name, null, null));
         }
-        public static MediaServiceAccountDetails GetMediaService(this IMediaServiceManagementResourceProviderNamespace proxy, string subscriptionName, string name)
+
+        public static void DeleteMediaServicesAccount(this IMediaServiceManagementAzureNamespace proxy, string subscriptionName, string accountName)
         {
-            return proxy.EndGetMediaService(proxy.BeginGetMediaService(subscriptionName,name, null, null));
+            proxy.EndDeleteMediaServicesAccount(
+                proxy.BeginDeleteMediaServicesAccount(subscriptionName, accountName, null, null));
+        }
+
+        public static void RegenerateMediaServicesAccount(this IMediaServiceManagementAzureNamespace proxy, string subscriptionName, string accountName, string keyType)
+        {
+            proxy.EndRegenerateMediaServicesAccount(
+                proxy.BeginRegenerateMediaServicesAccount(subscriptionName, accountName, keyType, null, null));
         }
     }
 }

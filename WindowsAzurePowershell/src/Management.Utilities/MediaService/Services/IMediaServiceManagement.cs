@@ -52,29 +52,35 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services
         IAsyncResult BeginGetMediaServices(string subscriptionName, AsyncCallback callback, object state);
         MediaServiceAccounts EndGetMediaServices(IAsyncResult asyncResult);
 
+
         [Description("Returns a mediaservices by a name for a given subscription.")]
         [OperationContract(AsyncPattern = true)]
         [WebInvoke(Method = "GET", UriTemplate = UriElements.MediaServiceAccountDetails)]
         IAsyncResult BeginGetMediaService(string subscriptionName, string name, AsyncCallback callback, object state);
         MediaServiceAccountDetails EndGetMediaService(IAsyncResult asyncResult);
-        #endregion
 
+        [Description("Deletes the account for a given subscription.")]
+        [OperationContract(AsyncPattern = true)]
+        [WebInvoke(Method = "DELETE", UriTemplate = UriElements.MediaServiceRoot + "/{accountName}")]
+        IAsyncResult BeginDeleteMediaServicesAccount(
+            string subscriptionName,
+            string accountName,
+            AsyncCallback callback,
+            object state);
+
+        void EndDeleteMediaServicesAccount(IAsyncResult asyncResult);
+
+        [Description("Regenerates an account for a given subscription.")]
+        [OperationContract(AsyncPattern = true)]
+        [WebInvoke(Method = "POST", UriTemplate = UriElements.MediaServiceRoot + "/{accountName}/AccountKeys/{keyType}/Regenerate")]
+        IAsyncResult BeginRegenerateMediaServicesAccount(
+            string subscriptionName,
+            string accountName,
+            string keyType,
+            AsyncCallback callback,
+            object state);
+        void EndRegenerateMediaServicesAccount(IAsyncResult asyncResult);
         
-    }
-
-    /// <summary>
-    /// Provides the Windows Azure Service Management Api for Windows Azure Websites. 
-    /// </summary>
-    [ServiceContract(Namespace = UriElements.AccountDetailsNamespace)]
-    [ServiceKnownType(typeof(MediaServiceAccountDetails))]
-    [ServiceKnownType(typeof(AccountKeys))]
-    public interface IMediaServiceManagementResourceProviderNamespace
-    {
-        [Description("Returns a mediaservices by a name for a given subscription.")]
-        [OperationContract(AsyncPattern = true)]
-        [WebInvoke(Method = "GET", UriTemplate = UriElements.MediaServiceAccountDetails)]
-        IAsyncResult BeginGetMediaService(string subscriptionName, string name, AsyncCallback callback, object state);
-        MediaServiceAccountDetails EndGetMediaService(IAsyncResult asyncResult);
-
+        #endregion        
     }
 }
