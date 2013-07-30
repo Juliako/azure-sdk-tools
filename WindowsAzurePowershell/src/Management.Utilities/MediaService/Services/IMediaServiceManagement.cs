@@ -22,19 +22,7 @@ using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.MediaSer
 
 namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services
 {
-    [XmlRoot(ElementName = "Error", Namespace = UriElements.ServiceNamespace)]
-    public class ServiceError
-    {
-        public string Code { get; set; }
-        public string Message { get; set; }
-        public string ExtendedCode { get; set; }
-        public string MessageTemplate { get; set; }
-
-        [XmlArray("Parameters")]
-        [XmlArrayItem(typeof(string), Namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays")]
-        public List<string> Parameters { get; set; }
-    }
-
+   
     /// <summary>
     /// Provides the Windows Azure Service Management Api for Windows Azure Websites. 
     /// </summary>

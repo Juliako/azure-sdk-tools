@@ -57,30 +57,12 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService
                             XmlSerializer serializer = new XmlSerializer(typeof(ServiceError));
                             ServiceError serviceError = (ServiceError)serializer.Deserialize(streamReader);
 
-                            string message;
-                            if (serviceError.MessageTemplate.Equals(Resources.WebsiteAlreadyExists))
-                            {
-                                message = string.Format(Resources.WebsiteAlreadyExistsReplacement,
-                                                                serviceError.Parameters.First());
-                            }
-                            else if (serviceError.MessageTemplate.Equals(Resources.CannotFind) &&
-                                     ("WebSpace".Equals(serviceError.Parameters.FirstOrDefault()) ||
-                                     "GeoRegion".Equals(serviceError.Parameters.FirstOrDefault())))
-                            {
-                                message = string.Format(Resources.CannotFind, "Location",
-                                                                serviceError.Parameters[1]);
-                            }
-                            else
-                            {
-                                message = serviceError.Message;
-                            }
-
                             if (showError)
                             {
                                 WriteExceptionError(new Exception(serviceError.Message));
                             }
 
-                            return message;
+                            return serviceError.Message;
                         }
                     }
                 }

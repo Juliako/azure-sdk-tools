@@ -79,9 +79,9 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.Medi
     [Newtonsoft.Json.JsonObject(Title = "AccountCreationResult")]
     public sealed class AccountCreationResult
     {
-        public Guid AccountId { get; internal set; }
-        public string AccountName { get; internal set; }
-        public string Subscription { get; internal set; }
+        public string AccountId { get; set; }
+        public string AccountName { get; set; }
+        public string Subscription { get; set; }
     }
 
     [DataContract]
@@ -131,6 +131,14 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.Medi
     [DataContract(Namespace = UriElements.ServiceNamespace)]
     public class PagedSites : PagedSet<MediaServiceAccount>
     {
+    }
+
+    [DataContract]
+    [Newtonsoft.Json.JsonObject(Title = "ServiceError")]
+    public class ServiceError
+    {
+        public string Code { get; set; }
+        public string Message { get; set; }
     }
 
 

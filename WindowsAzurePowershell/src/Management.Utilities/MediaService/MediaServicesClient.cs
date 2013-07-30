@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 using Microsoft.WindowsAzure.Management.Utilities.CloudService;
 using Microsoft.WindowsAzure.Management.Utilities.Common;
 using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services;
@@ -10,6 +13,7 @@ using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.MediaSer
 using Microsoft.WindowsAzure.ServiceManagement;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ServiceError = Microsoft.WindowsAzure.Management.Utilities.Websites.Services.ServiceError;
 
 namespace Microsoft.WindowsAzure.Management.Utilities.MediaService
 {
@@ -44,7 +48,20 @@ namespace Microsoft.WindowsAzure.Management.Utilities.MediaService
             {
                 HttpResponseMessage message = client.PostAsJsonAsyncWithoutEnsureSuccessCode(UriElements.Accounts, JObject.FromObject(request), Logger);
                 string content =message.Content.ReadAsStringAsync().Result;
-                result = JsonConvert.DeserializeObject(content, typeof(AccountCreationResult)) as AccountCreationResult;
+                if (message.IsSuccessStatusCode)
+                {
+                    result = JsonConvert.DeserializeObject(content, typeof (AccountCreationResult)) as AccountCreationResult;
+                }
+                else
+                {
+
+                    XmlDocument  doc =new XmlDocument();
+                    doc.LoadXml(content);
+                    content = doc.InnerText;
+                    var serviceError = JsonConvert.DeserializeObject(content, typeof(ServiceError)) as ServiceError;
+                    //Websites.Services.ServiceError serviceError = (ServiceError) serializer.Deserialize(message.Content.ReadAsStreamAsync().Result);
+                    throw new ServiceManagementClientException(message.StatusCode, new ServiceManagementError() { Code = message.StatusCode.ToString(), Message = serviceError.Message}, string.Empty);
+                }
             }
             return result;
         }

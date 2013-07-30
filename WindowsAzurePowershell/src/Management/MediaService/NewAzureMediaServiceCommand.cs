@@ -6,7 +6,7 @@ using Microsoft.WindowsAzure.Management.Utilities.MediaService.Services.MediaSer
 
 namespace Microsoft.WindowsAzure.Management.MediaService
 {
-    [Cmdlet(VerbsCommon.New, "AzureMediaServices"), OutputType(typeof(MediaServiceAccountDetails), typeof(IEnumerable<MediaServiceAccount>))]
+    [Cmdlet(VerbsCommon.New, "AzureMediaServices"), OutputType(typeof(AccountCreationResult))]
     public class NewAzureMediaServiceCommand : MediaServiceBaseCmdlet
     {
 

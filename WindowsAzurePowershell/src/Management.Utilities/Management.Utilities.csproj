@@ -228,7 +228,6 @@
     <Compile Include="MediaService\IMediaServicesClient.cs" />
     <Compile Include="MediaService\MediaServiceBaseCmdLet.cs" />
     <Compile Include="MediaService\MediaServicesClient.cs" />
-    <Compile Include="MediaService\Services\HttpClientExtensions.cs" />
     <Compile Include="MediaService\Services\IMediaServiceManagement.cs" />
     <Compile Include="MediaService\Services\MediaServicesEntities\IMediaServiceAccount.cs" />
     <Compile Include="MediaService\Services\MediaServicesExtensionsMethods.cs" />
